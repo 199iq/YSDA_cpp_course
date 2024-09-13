@@ -1,5 +1,5 @@
 [manytask]: https://cpp0.manytask.org/
-[на странице курса]: https://lk.yandexdataschool.ru/
+[на странице курса]: https://lk.yandexdataschool.ru/courses/2024-autumn/7.1297-obuchenie-iazyku-cpp-chast-1/
 [таблице с результатами]: https://docs.google.com/spreadsheets/d/1u5qjZgIbgghnCelsuVxkIEOlk0fw_-P9o7llJw7XDJQ/edit?usp=sharing
 
 # Настройка окружения
