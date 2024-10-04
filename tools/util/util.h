@@ -99,11 +99,12 @@ inline std::filesystem::path GetFileDir(std::string file) {
     if (path.is_absolute() && std::filesystem::is_regular_file(path)) {
         return path.parent_path();
     } else {
-        throw std::runtime_error{"Bad file name"};
+        throw std::runtime_error{"Bad file path"};
     }
 }
 
-inline std::filesystem::path GetRelativeDir(std::string_view file_path, std::string_view relative_path) {
+inline std::filesystem::path GetRelativeDir(std::string_view file_path,
+                                            std::string_view relative_path) {
     auto path = std::filesystem::path{file_path}.parent_path() / relative_path;
     if (path.is_absolute() && std::filesystem::is_directory(path)) {
         return path;
@@ -116,7 +117,7 @@ class Timer {
     using Clock = std::chrono::steady_clock;
     struct Times {
         Clock::duration wall_time;
-        std::chrono::microseconds cpu_time; 
+        std::chrono::microseconds cpu_time;
     };
 
 public:
@@ -125,7 +126,6 @@ public:
     }
 
 private:
-
     static std::chrono::microseconds GetCPUTime() {
 #ifdef __linux__
         if (rusage usage; ::getrusage(RUSAGE_SELF, &usage)) {
@@ -141,7 +141,7 @@ private:
     }
 
     const std::chrono::time_point<Clock> wall_start_ = Clock::now();
-    const std::chrono::microseconds cpu_start_ = GetCPUTime(); 
+    const std::chrono::microseconds cpu_start_ = GetCPUTime();
 };
 
 #ifdef __linux__
@@ -180,14 +180,14 @@ private:
     static size_t GetDataMemoryUsage() {
         size_t pages;
         std::ifstream in{"/proc/self/statm"};
-        for (auto i = 0; i < 6; ++i){
+        for (auto i = 0; i < 6; ++i) {
             in >> pages;
         }
         if (!in) {
             throw std::runtime_error{"Failed to get number of pages"};
         }
         return pages * kPageSize;
-    } 
+    }
 
     static inline const auto kPageSize = ::getpagesize();
     static inline auto is_active = false;
@@ -196,6 +196,18 @@ private:
 template <class T>
 MemoryGuard MakeMemoryGuard(size_t n) {
     return MemoryGuard{n * sizeof(T)};
+}
+
+#else
+
+struct DummyGuard {
+    ~DummyGuard() {
+    }
+};
+
+template <class T>
+DummyGuard MakeMemoryGuard(size_t) {
+    return {};
 }
 
 #endif
