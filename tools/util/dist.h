@@ -1,8 +1,10 @@
 #pragma once
 
+#include <algorithm>
 #include <type_traits>
 #include <limits>
 #include <cstdint>
+#include <cstddef>
 #include <cmath>
 
 template <typename IntType = int>
