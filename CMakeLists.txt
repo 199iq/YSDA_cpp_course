@@ -34,7 +34,6 @@ add_if_exists(permutations)
 add_if_exists(reverse-map)
 add_if_exists(long-sum)
 add_if_exists(diff-pairs)
-add_if_exists(advance)
 
 add_if_exists(quadratic)
 add_if_exists(pt-triangle)
@@ -77,6 +76,9 @@ endif()
 
 # add_if_exists(bad-rand)
 
+add_if_exists(advance)
+add_if_exists(universal_find)
+
 add_if_exists(vector)
 add_if_exists(lru-cache)
 add_if_exists(cow-vector)
@@ -84,10 +86,6 @@ add_if_exists(cow-vector)
 add_if_exists(dedup)
 add_if_exists(smart-ptr)
 add_if_exists(deque)
-add_if_exists(rule-of-5)
-add_if_exists(gcd)
-add_if_exists(reallol)
-add_if_exists(universal_find)
 
 # add_if_exists(list)
 # add_if_exists(calculator)
