@@ -45,16 +45,12 @@ add_if_exists(filter-even)
 add_if_exists(swap-sort)
 add_if_exists(entrance)
 
-# add_if_exists(decoder)
-
 add_if_exists(ring-buffer)
 add_if_exists(matrix)
 add_if_exists(static-map)
 add_if_exists(string-view)
 add_if_exists(dungeon)
 add_if_exists(stack)
-
-# add_if_exists(bad-hash)
 
 add_if_exists(find-last)
 add_if_exists(local-max)
@@ -74,8 +70,6 @@ elseif()
   message(STATUS "raytracer disabled. PNG:${PNG_FOUND}")
 endif()
 
-# add_if_exists(bad-rand)
-
 add_if_exists(advance)
 add_if_exists(universal_find)
 
@@ -87,20 +81,20 @@ add_if_exists(dedup)
 add_if_exists(smart-ptr)
 add_if_exists(deque)
 
-# add_if_exists(list)
-# add_if_exists(calculator)
-# add_if_exists(reader)
+add_if_exists(list)
+add_if_exists(calculator)
+add_if_exists(reader)
 
-# add_if_exists(scheme)
-# add_if_exists(scheme-tokenizer)
-# add_if_exists(scheme-parser)
+add_if_exists(scheme)
+add_if_exists(scheme-tokenizer)
+add_if_exists(scheme-parser)
 
-# add_if_exists(safe-transform)
-# add_if_exists(intrusive-list)
-# add_if_exists(any)
+add_if_exists(safe-transform)
+add_if_exists(intrusive-list)
+add_if_exists(any)
 
-# add_if_exists(tryhard)
-# add_if_exists(pimpl)
+add_if_exists(tryhard)
+add_if_exists(pimpl)
 
 # add_if_exists(editor)
 # add_if_exists(small-test-framework)
@@ -123,3 +117,7 @@ add_if_exists(deque)
 # elseif()
 #   message(STATUS "fast-dither disabled. PNG:${PNG_FOUND} nanoflann:${nanoflann_FOUND}")
 # endif()
+
+add_if_exists(decoder)
+add_if_exists(bad-hash)
+add_if_exists(bad-rand)
