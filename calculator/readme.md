@@ -20,5 +20,6 @@
 ### Примечание
 
 * Почитать об идеях рекурсивного разбора выражения можно здесь: http://informatics.mccme.ru/mod/resource/view.php?id=19586.
+* Еще можно почитать главу из книги `Crafting Interpreters`: https://craftinginterpreters.com/parsing-expressions.html
 * Рекомендуется перед решением явно записать грамматику выражения (как это сделано по ссылке выше).
 * Удобно понимать тип следующего токена через метод [`std::istream::peek()`](https://en.cppreference.com/w/cpp/io/basic_istream/peek)
