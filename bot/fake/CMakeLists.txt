@@ -1,0 +1,5 @@
+add_library(fake_telegram_server fake.cpp fake_data.cpp)
+target_link_libraries(fake_telegram_server PUBLIC PocoNet PocoNetSSL PocoFoundation PocoJSON PocoUtil)
+
+add_executable(run_fake_telegram_server fake_main.cpp)
+target_link_libraries(run_fake_telegram_server PRIVATE fake_telegram_server)
