@@ -5,6 +5,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <optional>
 
 #include <Poco/URI.h>
 #include <Poco/Net/HTTPServerRequest.h>
@@ -136,8 +137,7 @@ public:
 
         int64_t chat_id;
         std::string text;
-        auto has_reply_to_message_id = false;
-        int64_t reply_to_message_id;
+        std::optional<int64_t> reply_to_message_id;
         auto parse_json = [&] {
             Poco::JSON::Parser parser;
             auto body = parser.parse(request.stream());
@@ -146,9 +146,17 @@ public:
             chat_id = message->getValue<int64_t>("chat_id");
             text = message->getValue<std::string>("text");
 
+            // OLD_API
             if (message->has("reply_to_message_id")) {
-                has_reply_to_message_id = true;
                 reply_to_message_id = message->getValue<int64_t>("reply_to_message_id");
+            }
+
+            // NEW_API
+            if (message->has("reply_parameters")) {
+                auto reply_parameters = message->getObject("reply_parameters");
+                if (reply_parameters->has("message_id")) {
+                    reply_to_message_id = reply_parameters->getValue<int64_t>("message_id");
+                }
             }
         };
 
@@ -184,8 +192,8 @@ public:
             if (chat_id != 104519755) {
                 Fail("Invalid chat id in reply message");
             }
-            if (!has_reply_to_message_id || reply_to_message_id != 2) {
-                Fail("reply_to_message_id field is incorrect");
+            if (!reply_to_message_id || *reply_to_message_id != 2) {
+                Fail("reply_to_message_id or request_parameters field is incorrect");
             }
 
             response.setStatus(Response::HTTP_OK);
