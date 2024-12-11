@@ -213,18 +213,50 @@ public:
     }
 
     void HandleRequest(Request& request, Response& response) override {
+        auto load_params_from_body = [&] { return request.getContentLength() > 0; };
+        Poco::Nullable<uint64_t> timeout;
+        Poco::Nullable<uint64_t> offset;
+        auto parse_json = [&] {
+            Poco::JSON::Parser parser;
+            auto body = parser.parse(request.stream());
+            auto message = body.extract<Poco::JSON::Object::Ptr>();
+
+            timeout = message->getNullableValue<uint64_t>("timeout");
+            offset = message->getNullableValue<uint64_t>("offset");
+        };
         if (++fulfilled_ == 1) {
-            ExpectURI(request, "/bot123/getUpdates?timeout=5");
+            if (load_params_from_body()) {
+                parse_json();
+                if (timeout != 5ul) {
+                    Fail("Invalid timeout param");
+                }
+            } else {
+                ExpectURI(request, "/bot123/getUpdates?timeout=5");
+            }
             ExpectMethod(request, "GET");
             response.setStatus(Response::HTTP_OK);
             response.send() << fake_data::kGetUpdatesTwoMessages;
         } else if (fulfilled_ == 2) {
-            ExpectURI(request, "/bot123/getUpdates?offset=851793508&timeout=5");
+            if (load_params_from_body()) {
+                parse_json();
+                if (timeout != 5ul || offset != 851793508ul) {
+                    Fail("Invalid params set");
+                }
+            } else {
+                ExpectURI(request, "/bot123/getUpdates?offset=851793508&timeout=5");
+            }
             ExpectMethod(request, "GET");
             response.setStatus(Response::HTTP_OK);
             response.send() << fake_data::kGetUpdatesZeroMessages;
         } else if (fulfilled_ == 3) {
-            ExpectURI(request, "/bot123/getUpdates?offset=851793508&timeout=5");
+            if (load_params_from_body()) {
+                parse_json();
+                if (timeout != 5ul || offset != 851793508ul) {
+                    Fail("Invalid params set");
+                }
+            } else {
+                ExpectURI(request, "/bot123/getUpdates?offset=851793508&timeout=5");
+            }
             ExpectMethod(request, "GET");
             response.setStatus(Response::HTTP_OK);
             response.send() << fake_data::kGetupdatesOneMessage;
