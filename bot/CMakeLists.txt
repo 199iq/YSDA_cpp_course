@@ -6,7 +6,7 @@ if (APPLE)
   include_directories(/usr/local/opt/openssl/include)
 endif()
 
-file(GLOB SOLUTION_SRC CONFIGURE_DEPENDS "telegram/*.cpp")
+file(GLOB_RECURSE SOLUTION_SRC CONFIGURE_DEPENDS "telegram/*.cpp")
 add_library(telegram ${SOLUTION_SRC})
 target_link_libraries(telegram PUBLIC PocoNet PocoNetSSL PocoFoundation PocoJSON PocoUtil)
 target_include_directories(telegram PUBLIC .)
