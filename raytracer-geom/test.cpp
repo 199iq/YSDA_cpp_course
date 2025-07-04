@@ -83,6 +83,12 @@ void CheckIntersection(const std::optional<Intersection>& intersection, std::ist
     *is >> result;
 
     if ((result >= 0) != intersection.has_value()) {
+        // Added lines
+        // std::cout << intersection.has_value() << " " << result << "\n";
+        // if (intersection.has_value()) {
+        //     std::cout << intersection->GetDistance() << "\n";
+        // }
+        // exit(1); // WARNING!
         FAIL_CHECK("Wrong GetIntersection");
         return;
     }
@@ -198,6 +204,7 @@ TEST_CASE("Intersection") {
 
     Triangle triangle{{0, 0, 0}, {4, 0, 0}, {0, 4, 0}};
     intersection = GetIntersection({{2, 2, 1}, {0, 0, -1}}, triangle);
+    // auto intersection = GetIntersection({{2, 2, 1}, {0, 0, -1}}, triangle); // WARNING!
     CheckWithinAbs(intersection->GetPosition(), {2, 2, 0});
     CheckWithinAbs(intersection->GetNormal(), {0, 0, 1});
     CHECK_THAT(intersection->GetDistance(), WithinAbs(1.));

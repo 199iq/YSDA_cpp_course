@@ -5,12 +5,12 @@
 #include <string>
 
 struct Material {
-    std::string name;
-    Vector ambient_color;
-    Vector diffuse_color;
-    Vector specular_color;
-    Vector intensity;
-    double specular_exponent;
-    double refraction_index;
-    Vector albedo;
+    std::string name = "_NONE";
+    Vector ambient_color = {0, 0, 0};
+    Vector diffuse_color = {0, 0, 0};
+    Vector specular_color = {0, 0, 0};
+    Vector intensity = {0, 0, 0};
+    double specular_exponent = 0;
+    double refraction_index = 1; // standart AIR refraction index
+    Vector albedo = {1, 0, 0};
 };
