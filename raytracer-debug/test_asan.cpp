@@ -16,7 +16,7 @@ void CheckImage(std::string_view obj_filename, std::string_view result_filename,
     static const auto kTestsDir = GetRelativeDir(__FILE__, "tests");
     auto image = Render(kTestsDir / obj_filename, camera_options, render_options);
     if (output_path) {
-        image.Write(*output_path);
+        image.Write(GetRelativeDir(__FILE__, "results") / output_path.value());
     }
     Compare(image, Image{kTestsDir / result_filename});
 }
@@ -24,9 +24,9 @@ void CheckImage(std::string_view obj_filename, std::string_view result_filename,
 TEST_CASE("Shading parts") {
     CameraOptions camera_opts{640, 480};
     RenderOptions render_opts{1, RenderMode::kDepth};
-    CheckImage("shading_parts/scene.obj", "shading_parts/depth.png", camera_opts, render_opts);
+    CheckImage("shading_parts/scene.obj", "shading_parts/depth.png", camera_opts, render_opts, "shading_parts_depth.png");
     render_opts.mode = RenderMode::kNormal;
-    CheckImage("shading_parts/scene.obj", "shading_parts/normal.png", camera_opts, render_opts);
+    CheckImage("shading_parts/scene.obj", "shading_parts/normal.png", camera_opts, render_opts, "shading_parts_normal.png");
 }
 
 TEST_CASE("Triangle") {
@@ -35,9 +35,9 @@ TEST_CASE("Triangle") {
                               .look_from = {0., 2., 0.},
                               .look_to = {0., 0., 0.}};
     RenderOptions render_opts{1, RenderMode::kDepth};
-    CheckImage("triangle/scene.obj", "triangle/depth.png", camera_opts, render_opts);
+    CheckImage("triangle/scene.obj", "triangle/depth.png", camera_opts, render_opts, "triangle_depth.png");
     render_opts.mode = RenderMode::kNormal;
-    CheckImage("triangle/scene.obj", "triangle/normal.png", camera_opts, render_opts);
+    CheckImage("triangle/scene.obj", "triangle/normal.png", camera_opts, render_opts, "triangle_normal.png");
 }
 
 TEST_CASE("Triangle2") {
@@ -46,9 +46,9 @@ TEST_CASE("Triangle2") {
                               .look_from = {0., -2., 0.},
                               .look_to = {0., 0., 0.}};
     RenderOptions render_opts{1, RenderMode::kDepth};
-    CheckImage("triangle/scene.obj", "triangle/depth2.png", camera_opts, render_opts);
+    CheckImage("triangle/scene.obj", "triangle/depth2.png", camera_opts, render_opts, "triangle2_depth.png");
     render_opts.mode = RenderMode::kNormal;
-    CheckImage("triangle/scene.obj", "triangle/normal2.png", camera_opts, render_opts);
+    CheckImage("triangle/scene.obj", "triangle/normal2.png", camera_opts, render_opts, "triangle2_normal.png");
 }
 
 TEST_CASE("Box with spheres") {
@@ -58,7 +58,7 @@ TEST_CASE("Box with spheres") {
                               .look_from = {0., .7, 1.75},
                               .look_to = {0., .7, 0.}};
     RenderOptions render_opts{4, RenderMode::kDepth};
-    CheckImage("box/cube.obj", "box/depth.png", camera_opts, render_opts);
+    CheckImage("box/cube.obj", "box/depth.png", camera_opts, render_opts, "box_with_spheres_depth.png");
     render_opts.mode = RenderMode::kNormal;
-    CheckImage("box/cube.obj", "box/normal.png", camera_opts, render_opts);
+    CheckImage("box/cube.obj", "box/normal.png", camera_opts, render_opts, "box_with_spheres_normal.png");
 }

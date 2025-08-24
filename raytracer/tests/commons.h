@@ -1,6 +1,6 @@
 #pragma once
 
-#include "image.h"
+#include "../image.h"
 
 #include <cmath>
 #include <string>
@@ -32,4 +32,5 @@ void Compare(const Image& actual, const Image& expected) {
 
     auto similarity = static_cast<double>(matches) / (actual.Width() * actual.Height());
     CHECK(similarity >= .99);
+    std::cout << "Similarity is " << similarity << "\n";
 }

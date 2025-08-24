@@ -5,10 +5,10 @@ TEST_CASE("Classic box") {
                               .screen_height = 500,
                               .look_from = {-.5, 1.5, .98},
                               .look_to = {0., 1., 0.}};
-    CheckImage("classic_box/CornellBox.obj", "classic_box/first.png", camera_opts, {4});
+    CheckImage("classic_box/CornellBox.obj", "classic_box/first.png", camera_opts, {4}, "classic_box_first.png");
     camera_opts.look_from = {-.9, 1.9, -1};
     camera_opts.look_to = {0., 0., 0.};
-    CheckImage("classic_box/CornellBox.obj", "classic_box/second.png", camera_opts, {4});
+    CheckImage("classic_box/CornellBox.obj", "classic_box/second.png", camera_opts, {4}, "classic_box_second.png");
 }
 
 TEST_CASE("Mirrors") {
@@ -16,7 +16,7 @@ TEST_CASE("Mirrors") {
                               .screen_height = 600,
                               .look_from = {2., 1.5, -.1},
                               .look_to = {1., 1.2, -2.8}};
-    CheckImage("mirrors/scene.obj", "mirrors/result.png", camera_opts, {9});
+    CheckImage("mirrors/scene.obj", "mirrors/result.png", camera_opts, {9}, "mirrors.png");
 }
 
 TEST_CASE("Distorted box") {
@@ -24,7 +24,7 @@ TEST_CASE("Distorted box") {
                               .screen_height = 500,
                               .look_from = {-0.5, 1.5, 1.98},
                               .look_to = {0., 1., 0.}};
-    CheckImage("distorted_box/CornellBox.obj", "distorted_box/result.png", camera_opts, {4});
+    CheckImage("distorted_box/CornellBox.obj", "distorted_box/result.png", camera_opts, {4}, "distorted_box.png");
 }
 
 TEST_CASE("Deer") {
@@ -32,5 +32,5 @@ TEST_CASE("Deer") {
                               .screen_height = 500,
                               .look_from = {100., 200., 150.},
                               .look_to = {0., 100., 0.}};
-    CheckImage("deer/CERF_Free.obj", "deer/result.png", camera_opts, {1});
+    CheckImage("deer/CERF_Free.obj", "deer/result.png", camera_opts, {1}, "deer.png");
 }

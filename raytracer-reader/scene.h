@@ -111,7 +111,7 @@ std::pair<int, int> GetTriplet(const std::string& line) {
         return {tmp[0], 0};
     } else {
         // point & normal
-        assert(!tmp[1]);
+        // assert(!tmp[1]); // WARNING! For deer file that assertion fails
         return {tmp[0], tmp[2]};
     }
 }

@@ -31,20 +31,63 @@ public:
         return data_[ind];
     }
 
+    // unary operator
     Vector operator-() const {
         return Vector(-data_[0], -data_[1], -data_[2]);
     }
 
+    Vector& operator+=(const Vector& rhs) {
+        data_[0] += rhs[0];
+        data_[1] += rhs[1];
+        data_[2] += rhs[2];
+        return *this;
+    }
+
     Vector operator+(const Vector& rhs) const {
-        return Vector(data_[0] + rhs[0], data_[1] + rhs[1], data_[2] + rhs[2]);
+        Vector tmp = *this;
+        tmp += rhs;
+        return tmp;
+    }
+
+    Vector& operator-=(const Vector& rhs) {
+        data_[0] -= rhs[0];
+        data_[1] -= rhs[1];
+        data_[2] -= rhs[2];
+        return *this;
     }
 
     Vector operator-(const Vector& rhs) const {
-        return *this + (-rhs);
+        Vector tmp = *this;
+        tmp -= rhs;
+        return tmp;
+    }
+
+    // Vector * scal
+    Vector& operator*=(double scal) {
+        data_[0] *= scal;
+        data_[1] *= scal;
+        data_[2] *= scal;
+        return *this;
     }
 
     Vector operator*(double scal) const {
-        return Vector(data_[0] * scal, data_[1] * scal, data_[2] * scal);
+        Vector tmp = *this;
+        tmp *= scal;
+        return tmp;
+    }
+
+    // Element-wise Vector * Vector
+    Vector& operator*=(const Vector& rhs) {
+        data_[0] *= rhs[0];
+        data_[1] *= rhs[1];
+        data_[2] *= rhs[2];
+        return *this;
+    }
+
+    Vector operator*(const Vector& rhs) const {
+        Vector tmp = *this;
+        tmp *= rhs;
+        return tmp;
     }
 
     double GetNorm() const {
@@ -67,7 +110,8 @@ private:
 };
 
 Vector operator*(double scal, const Vector& vec) {
-    return Vector(scal * vec[0], scal * vec[1], scal * vec[2]);
+    return vec * scal;
+    // return Vector(scal * vec[0], scal * vec[1], scal * vec[2]);
 }
 
 double DotProduct(const Vector& a, const Vector& b) {

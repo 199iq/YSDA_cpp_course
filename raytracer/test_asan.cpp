@@ -18,14 +18,14 @@ void CheckImage(std::string_view obj_filename, std::string_view result_filename,
     static const auto kTestsDir = GetRelativeDir(__FILE__, "tests");
     auto image = Render(kTestsDir / obj_filename, camera_options, render_options);
     if (output_path) {
-        image.Write(*output_path);
+        image.Write(GetRelativeDir(__FILE__, "results") / output_path.value());
     }
     Compare(image, Image{kTestsDir / result_filename});
 }
 
 TEST_CASE("Shading parts") {
     CameraOptions camera_opts{640, 480};
-    CheckImage("shading_parts/scene.obj", "shading_parts/scene.png", camera_opts, {1});
+    CheckImage("shading_parts/scene.obj", "shading_parts/scene.png", camera_opts, {1}, "shading_parts.png");
 }
 
 TEST_CASE("Triangle") {
@@ -33,7 +33,7 @@ TEST_CASE("Triangle") {
                               .screen_height = 480,
                               .look_from = {0., 2., 0.},
                               .look_to = {0., 0., 0.}};
-    CheckImage("triangle/scene.obj", "triangle/scene.png", camera_opts, {1});
+    CheckImage("triangle/scene.obj", "triangle/scene.png", camera_opts, {1}, "triangle.png");
 }
 
 TEST_CASE("Triangle2") {
@@ -41,7 +41,7 @@ TEST_CASE("Triangle2") {
                               .screen_height = 480,
                               .look_from = {0., -2., 0.},
                               .look_to = {0., 0., 0.}};
-    CheckImage("triangle/scene.obj", "triangle/black.png", camera_opts, {1});
+    CheckImage("triangle/scene.obj", "triangle/black.png", camera_opts, {1}, "triangle2.png");
 }
 
 TEST_CASE("Box with spheres") {
@@ -50,5 +50,5 @@ TEST_CASE("Box with spheres") {
                               .fov = std::numbers::pi / 3,
                               .look_from = {0., .7, 1.75},
                               .look_to = {0., .7, 0.}};
-    CheckImage("box/cube.obj", "box/cube.png", camera_opts, {4});
+    CheckImage("box/cube.obj", "box/cube.png", camera_opts, {4}, "box_with_spheres.png");
 }
